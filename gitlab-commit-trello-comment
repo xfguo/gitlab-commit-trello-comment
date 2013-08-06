@@ -1,12 +1,12 @@
 #! /bin/bash
 #
-# simple init script for gitlab-webhook-receiver
+# simple init script for gitlab-commit-trello-comment
 #
 #
 # chkconfig: 345 99 01
-# description: gitlab webhook receiver
+# description: gitlab commit with trello card number will comment to that card.
 #
-# File : gitlab-webhook-receiver
+# File : gitlab-commit-trello-comment
 
 # Source function library.
 . /etc/init.d/functions
@@ -17,7 +17,7 @@
 # Check that networking is up.
 [ "$NETWORKING" = "no" ] && exit 0
 
-prog="/var/lib/puppet/gitlab-webhook-receiver/gitlab-webhook-receiver.py"
+prog="/var/lib/puppet/gitlab-commit-trello-comment/gitlab-commit-trello-comment.py"
 PROG_USER="puppet"
 RETVAL=0
 
@@ -31,7 +31,7 @@ start () {
 
 stop () {
         echo -n "Stopping $prog"
-        killproc gitlab-webhook-receiver.py
+        killproc gitlab-commit-trello-comment.py
         RETVAL=$?
         [ $RETVAL -eq 0 ] && success || failure
         echo
@@ -59,7 +59,7 @@ case "$1" in
         RETVAL=$?
         ;;
   *)
-        echo "Usage: service gitlab-webhook-receiver {start|stop|restart|reload}"
+        echo "Usage: service gitlab-commit-trello-comment {start|stop|restart|reload}"
         RETVAL=2
         ;;
 esac

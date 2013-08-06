@@ -1,0 +1,13 @@
+############################################################
+##### You will likely need to change some of the below #####
+import logging
+
+trello_key = ''
+trello_token = ''
+board_id = ''
+
+gitlab_url = "https://sample.com"
+
+log_file = './webhook.log'
+log_max_size = 25165824         # 24 MB
+log_level = logging.INFO # logging.DEBUG is quite verbose
