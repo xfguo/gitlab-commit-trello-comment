@@ -84,7 +84,7 @@ class webhookReceiver(BaseHTTPRequestHandler):
         post = json.loads(data_string)
         repo = post['repository']['name']
         #got namespace
-        namespace = (urlsplit(post['repository']['homepage'])[2]).split('/')[0]
+        namespace = (urlsplit(post['repository']['homepage'])[2]).split('/')[1]
         namespace = ''.join(('/', namespace)) if namespace else namespace
         repo_url = ''.join((config.gitlab_url, namespace, '/', repo))
         branch = re.split('/', post['ref'])[-1]
