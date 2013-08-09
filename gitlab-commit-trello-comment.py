@@ -69,8 +69,18 @@ class webhookReceiver(BaseHTTPRequestHandler):
             receives post, handles it
         """
         log.debug('got post')
-        post = json.load(self.rfile)
-        
+        self.rfile._sock.settimeout(5)
+        data_string = self.rfile.read(int(self.headers['Content-Length']))
+        message = 'OK'
+        self.send_response(200)
+        self.send_header("Content-type", "text")
+        self.send_header("Content-length", str(len(message)))
+        self.end_headers()
+        self.wfile.write(message)
+        log.debug('gitlab connection should be closed now.')
+
+        #parse data
+        post = json.loads(data_string)
         repo = post['repository']['name']
         repo_url = config.gitlab_url + '/%s' % repo
         branch = re.split('/', post['ref'])[-1]
@@ -88,11 +98,6 @@ class webhookReceiver(BaseHTTPRequestHandler):
 %s''' % (author, repo, repo_url, branch, branch_url, git_hash, git_hash_url, comment)
             for card_short_id in card_short_id_list:
                 self.comment_to_trello(card_short_id, trello_comment)
-        self.send_response(200)
-        self.send_header("Content-type", "text/plain")
-        self.end_headers()
-        self.wfile.write('OK')
-        self.wfile.write('\n')
 
 def main():
     """
