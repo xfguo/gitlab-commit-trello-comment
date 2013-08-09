@@ -36,6 +36,7 @@ import logging.handlers
 
 from trolly import client as trolly_client
 from trolly import board as trolly_board
+from urlparse import urlsplit
 from trolly import card
 
 import config
@@ -82,10 +83,14 @@ class webhookReceiver(BaseHTTPRequestHandler):
         #parse data
         post = json.loads(data_string)
         repo = post['repository']['name']
-        repo_url = config.gitlab_url + '/%s' % repo
+        #got namespace
+        namespace = urlsplit(post['repository']['homepage'])[2]
+        namespace = ''.join(('/', namespace)) if namespace else namespace
+        repo_url = ''.join((config.gitlab_url, namespace, '/', repo))
         branch = re.split('/', post['ref'])[-1]
         branch_url = repo_url + '/commits/%s' % branch
         log.debug(pprint.pformat(post))
+        
         for commit in post['commits']:
             card_short_id_list = map(int, re.findall('#([1-9]+)', commit['message']))
             git_hash = commit['id'][:7]
