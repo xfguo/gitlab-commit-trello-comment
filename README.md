@@ -6,6 +6,12 @@ modified from gitlab-webhook-receiver project.
 gitlab-webhook-receiver is a script to receive http posts from gitlab and then
 pull the latest branches from a git repo.
 
+# Dependencies
+
+Before getting stated you will need install [Trolly](https://github.com/plish/Trolly) and httplib2 (reqired by trolly).
+
+    pip install trolly httplib2
+
 # License
 
 gitlab-commit-trello-comment is released under the [GPL v2](http://www.gnu.org/licenses/gpl-2.0.html).
@@ -15,7 +21,7 @@ gitlab-commit-trello-comment is released under the [GPL v2](http://www.gnu.org/l
 (1) Modify the script
 ---------------------
 
-Copy the config.py.sample to config and fill your gitlab and trello info:
+Copy the config.py.sample to config.py and fill your gitlab and trello info.
 
 (2) create the gitlab webhook
 -----------------------------
