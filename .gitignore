@@ -1,0 +1,4 @@
+.DS_Store
+config.py*
+.AppleDouble
+webhook.log
